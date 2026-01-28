@@ -3,176 +3,482 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORCO - منصة التوظيف الذكية</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Faculty of Veterinary Medicine - Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        med: {
+                            dark: '#022c22',    /* Very Dark Green */
+                            base: '#064e3b',    /* Dark Green */
+                            light: '#10b981',   /* Emerald */
+                            accent: '#34d399'   /* Light Accent */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        arabic: ['Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
         :root {
-            --primary: #0f172a; /* لون كحلي احترافي */
-            --accent: #3b82f6;  /* أزرق فاتح */
-            --bg: #f1f5f9;
-            --text: #334155;
+            --bg-color: #0f172a;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background-color: var(--bg); color: var(--text); }
-
-        /* Navigation */
-        nav {
-            background: white;
-            padding: 15px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-            position: sticky; top: 0; z-index: 1000;
+        body {
+            background-color: var(--bg-color);
+            color: #f1f5f9;
+            font-family: 'Tajawal', 'Outfit', sans-serif;
+            overflow-x: hidden;
         }
-        .logo-area { display: flex; align-items: center; gap: 10px; }
-        .logo-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
-        .logo-text { font-size: 1.8rem; font-weight: 800; color: var(--primary); letter-spacing: 1px; }
 
-        .nav-links button {
-            background: none; border: none; margin-right: 20px;
-            font-size: 1rem; cursor: pointer; color: var(--text);
-            font-weight: 600; transition: 0.3s;
+        /* تحسين تأثير الزجاج */
+        .glass-panel {
+            background: rgba(17, 25, 40, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
-        .nav-links button:hover { color: var(--accent); }
-        .nav-links .active { color: var(--accent); border-bottom: 2px solid var(--accent); }
 
-        /* Sections Handling */
-        .page-section { display: none; padding: 40px 8%; animation: fadeIn 0.5s ease; }
-        .page-section.active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Home Page (Hero) */
-        .hero {
-            text-align: center; background: var(--primary); color: white;
-            padding: 100px 20px; border-radius: 20px; margin-bottom: 40px;
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .hero h1 { font-size: 3rem; margin-bottom: 15px; }
 
-        /* Forms Styling */
-        .card {
-            background: white; padding: 30px; border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 600px; margin: 0 auto;
+        .card-hover:hover {
+            transform: translateY(-8px);
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.3);
         }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; }
-        input, select, textarea {
-            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none;
-        }
-        .main-btn {
-            background: var(--accent); color: white; border: none;
-            padding: 15px 30px; border-radius: 8px; cursor: pointer;
-            width: 100%; font-size: 1.1rem; font-weight: bold; transition: 0.3s;
-        }
-        .main-btn:hover { background: #2563eb; transform: scale(1.02); }
 
-        /* Customer Service Info */
-        .cs-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .info-box { background: white; padding: 20px; border-radius: 10px; text-align: center; }
-        .info-box i { font-size: 2rem; color: var(--accent); margin-bottom: 15px; }
+        .text-glow {
+            text-shadow: 0 0 20px rgba(52, 211, 153, 0.3);
+        }
 
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* تخصيص شريط التمرير */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #022c22; }
+        ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #34d399; }
+
+        /* حركات المودال */
+        .modal-enter {
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.9) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #34d399 0%, #2dd4bf 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
-<body>
+<body class="selection:bg-emerald-500 selection:text-white">
 
-    <nav>
-        <div class="logo-area">
-            <img src="C:\Users\Admin\Desktop\orco" alt="ORCO Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/50?text=ORCO'">
-            <span class="logo-text">ORCO</span>
-        </div>
-        <div class="nav-links">
-            <button onclick="showSection('home')" id="btn-home" class="active">الرئيسية</button>
-            <button onclick="showSection('apply')" id="btn-apply">تقديم طلب</button>
-            <button onclick="showSection('cs')" id="btn-cs">خدمة العملاء</button>
-        </div>
-    </nav>
+    <!-- الخلفية المتحركة (خلايا/شبكة) -->
+    <canvas id="bioCanvas"></canvas>
 
-    <section id="home" class="page-section active">
-        <div class="hero">
-            <h1>مرحباً بك في ORCO</h1>
-            <p>مستقبلك المهني يبدأ من هنا. ابحث عن الوظيفة التي تناسب طموحك.</p>
-        </div>
-        <div style="text-align: center;">
-            <button class="main-btn" style="width: auto;" onclick="showSection('apply')">تصفح الوظائف المتاحة الآن</button>
-        </div>
-    </section>
-
-    <section id="apply" class="page-section">
-        <div class="card">
-            <h2 style="margin-bottom: 20px; text-align: center;">نموذج التقديم للوظيفة</h2>
-            <form onsubmit="event.preventDefault(); alert('تم استلام طلبك بنجاح في ORCO!');">
-                <div class="form-group">
-                    <label>الاسم الكامل</label>
-                    <input type="text" placeholder="أدخل اسمك الثلاثي" required>
+    <div class="relative z-10 min-h-screen flex flex-col justify-between">
+        
+        <!-- Navbar -->
+        <nav class="w-full px-6 py-4 flex justify-between items-center glass-panel sticky top-0 z-50 border-b-0 border-b-emerald-500/20">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center text-white text-xl shadow-lg shadow-emerald-500/30">
+                    <i class="fa-solid fa-staff-snake"></i>
                 </div>
-                <div class="form-group">
-                    <label>التخصص</label>
-                    <select>
-                        <option>برمجة وتطوير</option>
-                        <option>تصميم جرافيك</option>
-                        <option>تسويق رقمي</option>
-                        <option>إدارة أعمال</option>
-                    </select>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight tracking-wide font-sans">VET MED</h1>
+                    <p class="text-xs text-emerald-400 font-arabic">بوابة الطب البيطري</p>
                 </div>
-                <div class="form-group">
-                    <label>رفع السيرة الذاتية (CV)</label>
-                    <input type="file">
-                </div>
-                <button type="submit" class="main-btn">إرسال الطلب</button>
-            </form>
-        </div>
-    </section>
+            </div>
+            <div class="hidden md:flex gap-6 text-sm font-arabic text-gray-300">
+                <a href="#" class="hover:text-emerald-400 transition-colors">الرئيسية</a>
+                <a href="#" class="hover:text-emerald-400 transition-colors">الأبحاث</a>
+                <a href="#" class="hover:text-emerald-400 transition-colors">المكتبة</a>
+            </div>
+            <button class="bg-emerald-600/20 hover:bg-emerald-500 hover:text-white text-emerald-400 border border-emerald-500/30 px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 font-arabic">
+                تسجيل الدخول
+            </button>
+        </nav>
 
-    <section id="cs" class="page-section">
-        <h2 style="text-align: center; margin-bottom: 40px;">نحن هنا لمساعدتك في ORCO</h2>
-        <div class="cs-info">
-            <div class="info-box">
-                <i class="fas fa-phone-alt"></i>
-                <h3>اتصل بنا</h3>
-                <p>92000XXXX</p>
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-6 py-12 w-full">
+            
+            <!-- Hero Section -->
+            <div class="text-center mb-20 relative">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/10 blur-[120px] rounded-full -z-10"></div>
+                
+                <span class="inline-block py-1 px-3 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold mb-6 tracking-wider">
+                    ACADEMIC YEAR 2026 - 2027
+                </span>
+                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 font-arabic leading-tight">
+                    كلية <span class="gradient-text">الطب البيطري</span>
+                </h1>
+                <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-arabic leading-relaxed">
+                    منصة التعليم الإلكتروني المتقدمة لدراسة التشريح، الجراحة، والأمراض المشتركة.
+                    <br>
+                    <span class="text-emerald-500/80 text-base mt-2 block">رعاية الحيوان.. حماية للإنسان</span>
+                </p>
             </div>
-            <div class="info-box">
-                <i class="fas fa-envelope"></i>
-                <h3>البريد الإلكتروني</h3>
-                <p>support@orco.com</p>
+
+            <!-- Content Grid Container -->
+            <div class="glass-panel rounded-[2rem] p-8 md:p-12 shadow-2xl border-t border-white/10">
+                
+                <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4 border-b border-white/5 pb-8">
+                    <div>
+                        <h3 class="text-2xl font-bold text-white font-arabic">الأقسام العلمية & المقررات</h3>
+                        <p class="text-slate-400 text-sm mt-1 font-arabic">اختر القسم للاطلاع على متطلبات البحث والمراجع</p>
+                    </div>
+                    <button onclick="toggleInstructions()" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-xl transition-all border border-slate-600 group">
+                        <span class="font-arabic">تعليمات البحث</span>
+                        <i class="fa-solid fa-circle-info text-emerald-400 group-hover:scale-110 transition-transform"></i>
+                    </button>
+                </div>
+
+                <!-- Cards Grid -->
+                <div id="modulesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Cards will be injected via JS -->
+                </div>
             </div>
-            <div class="info-box">
-                <i class="fas fa-comments"></i>
-                <h3>دردشة مباشرة</h3>
-                <p>متاحين 24/7</p>
+        </main>
+
+        <footer class="w-full text-center py-8 text-slate-500 text-sm font-arabic border-t border-emerald-900/30 glass-panel mt-12">
+            <p>&copy; 2026 جامعة العريش - كلية الطب البيطري. جميع الحقوق محفوظة.</p>
+        </footer>
+
+    </div>
+
+    <!-- Modal for Module Details -->
+    <div id="detailsModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-opacity">
+        <div class="modal-enter glass-panel w-full max-w-3xl rounded-3xl overflow-hidden shadow-2xl border border-emerald-500/20 bg-[#0f172a]">
+            
+            <div id="modalHeader" class="relative p-8 pb-6 bg-gradient-to-l from-emerald-900/40 to-transparent">
+                <button onclick="closeModals()" class="absolute top-6 left-6 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark text-white"></i>
+                </button>
+                <div id="modalTitleContent"></div>
+            </div>
+
+            <div class="p-8 pt-4">
+                <div class="flex items-center gap-2 mb-6 text-emerald-400 text-sm font-bold uppercase tracking-widest font-sans">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>Research Requirements</span>
+                </div>
+                
+                <ul id="modalList" class="grid gap-3">
+                    <!-- List items via JS -->
+                </ul>
+
+                <div class="mt-8 pt-6 border-t border-white/5 flex justify-end gap-4">
+                    <button onclick="closeModals()" class="px-6 py-2 rounded-lg text-slate-400 hover:text-white font-arabic transition-colors">إغلاق</button>
+                    <button class="bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-2.5 rounded-xl font-bold font-arabic shadow-lg shadow-emerald-600/20 transition-all transform hover:scale-105">
+                        تحميل المصادر PDF
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="card" style="margin-top: 30px;">
-            <h3>أرسل لنا رسالة مباشرة</h3><br>
-            <textarea rows="4" placeholder="كيف يمكننا مساعدتك؟"></textarea><br><br>
-            <button class="main-btn">إرسال الاستفسار</button>
+    </div>
+
+    <!-- Instructions Modal -->
+    <div id="instrModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-md">
+        <div class="modal-enter bg-[#111827] w-full max-w-4xl rounded-3xl border border-slate-700 overflow-hidden shadow-2xl">
+            <div class="grid md:grid-cols-5 h-full">
+                <!-- Side Banner -->
+                <div class="md:col-span-2 bg-gradient-to-br from-emerald-600 to-teal-800 p-8 text-white flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/medical-icons.png')]"></div>
+                    <div>
+                        <h3 class="text-3xl font-bold font-arabic mb-2">تعليمات هامة</h3>
+                        <p class="opacity-80 font-arabic text-sm">يرجى قراءة الدليل الأكاديمي قبل البدء في إعداد المشروع.</p>
+                    </div>
+                    <i class="fa-solid fa-user-doctor text-9xl absolute -bottom-10 -right-10 opacity-20"></i>
+                </div>
+                
+                <!-- Content -->
+                <div class="md:col-span-3 p-8 md:p-10 bg-[#0f172a]">
+                    <div class="space-y-6">
+                        <div class="flex gap-4 items-start">
+                            <div class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-book-medical"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-bold font-arabic text-lg">المصادر المعتمدة</h5>
+                                <p class="text-slate-400 text-sm mt-1 font-arabic">يجب الاعتماد على Merck Veterinary Manual و PubDev والمراجع الجامعية المحدثة بعد عام 2020.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 items-start">
+                            <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-microscope"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-white font-bold font-arabic text-lg">التوثيق العلمي</h5>
+                                <p class="text-slate-400 text-sm mt-1 font-arabic">استخدام نظام APA في توثيق المراجع والصور المجهرية والرسوم البيانية.</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-red-500/10 border border-red-500/20 rounded-xl mt-6">
+                            <p class="text-red-400 text-sm font-bold font-arabic flex items-center gap-2">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                                تنبيه هام:
+                            </p>
+                            <p class="text-slate-400 text-xs mt-1 font-arabic">سيتم فحص جميع الأبحاث للكشف عن الاقتباس (Plagiarism). نسبة التشابه المسموح بها لا تتعدى 15%.</p>
+                        </div>
+                    </div>
+                    <button onclick="closeModals()" class="w-full mt-8 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold font-arabic transition-all">
+                        فهمت التعليمات
+                    </button>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
 
     <script>
-        function showSection(sectionId) {
-            // إخفاء كل الأقسام
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.classList.remove('active');
-            });
+        // --- 1. Background Animation (Biological Network) ---
+        const canvas = document.getElementById('bioCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
 
-            // إزالة الحالة النشطة من الأزرار
-            document.querySelectorAll('.nav-links button').forEach(btn => {
-                btn.classList.remove('active');
-            });
+        // إعدادات الجسيمات
+        const particleConfig = {
+            count: 70, // عدد النقاط
+            connectionDistance: 180, // مسافة التوصيل
+            speed: 0.3, // سرعة الحركة
+            color: '16, 185, 129' // لون الزمرد (RGB)
+        };
 
-            // إظهار القسم المطلوب
-            document.getElementById(sectionId).classList.add('active');
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * particleConfig.speed;
+                this.vy = (Math.random() - 0.5) * particleConfig.speed;
+                this.size = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // ارتداد من الحواف
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${particleConfig.color}, 0.5)`;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleConfig.count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
             
-            // تمييز الزر المختار
-            document.getElementById('btn-' + sectionId).classList.add('active');
+            // رسم الخطوط أولاً (الخلفية)
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
 
-            // التمرير لأعلى الصفحة
-            window.scrollTo(0,0);
+                    if (distance < particleConfig.connectionDistance) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(${particleConfig.color}, ${1 - distance/particleConfig.connectionDistance * 1.2})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // تحديث ورسم النقاط
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // تفاعل الماوس (إضافة نقطة تتبع الماوس)
+        let mouseParticle = new Particle();
+        mouseParticle.size = 0; // مخفي، فقط للتوصيل
+        
+        window.addEventListener('mousemove', (e) => {
+            mouseParticle.x = e.clientX;
+            mouseParticle.y = e.clientY;
+        });
+
+        // دمج نقطة الماوس في حلقة الرسم لعمل تأثير التوصيل
+        // (تم تبسيط الكود لعدم التعقيد، الحركة الأساسية تكفي للجمالية)
+
+        window.addEventListener('resize', () => { resize(); initParticles(); });
+        resize();
+        initParticles();
+        animate();
+
+
+        // --- 2. Content Management (Vet Modules) ---
+        const modules = [
+            {
+                id: 1,
+                title: "Anatomy & Histology",
+                arTitle: "التشريح والأنسجة",
+                desc: "دراسة البنية المجهرية والتشريحية للحيوانات.",
+                icon: "fa-bone",
+                color: "text-blue-400",
+                reqs: ["Osteology of Equine Limbs", "Comparative Myology", "Histology of Digestive System", "Dissection Techniques", "Cellular Biology"]
+            },
+            {
+                id: 2,
+                title: "Internal Medicine",
+                arTitle: "الطب الباطني",
+                desc: "تشخيص وعلاج الأمراض غير الجراحية.",
+                icon: "fa-stethoscope",
+                color: "text-emerald-400",
+                reqs: ["Digestive Disorders in Ruminants", "Respiratory Diseases", "Metabolic Profiles", "Clinical Examination Methods", "Ultrasound Diagnostics"]
+            },
+            {
+                id: 3,
+                title: "Surgery & Anesthesia",
+                arTitle: "الجراحة والتخدير",
+                desc: "تقنيات العمليات الجراحية وإدارة الألم.",
+                icon: "fa-syringe",
+                color: "text-red-400",
+                reqs: ["Suturing Techniques", "Anesthesia Protocols", "Orthopedic Surgery", "Wound Management", "Sterilization Procedures"]
+            },
+            {
+                id: 4,
+                title: "Zoonotic Diseases",
+                arTitle: "الأمراض المشتركة",
+                desc: "الأمراض التي تنتقل بين الحيوان والإنسان.",
+                icon: "fa-virus",
+                color: "text-yellow-400",
+                reqs: ["Rabies Control & Prevention", "Brucellosis Impact", "Avian Influenza", "Public Health Measures", "Epidemiology Reports"]
+            },
+            {
+                id: 5,
+                title: "Pharmacology",
+                arTitle: "علم الأدوية",
+                desc: "تأثير العقاقير الطبية واستخداماتها.",
+                icon: "fa-pills",
+                color: "text-purple-400",
+                reqs: ["Antibiotics Resistance", "Drug Dosage Calculation", "Toxicology Basics", "Anti-inflammatory Drugs", "Pharmacokinetics"]
+            },
+            {
+                id: 6,
+                title: "Nutrition",
+                arTitle: "تغذية الحيوان",
+                desc: "نظم التغذية السليمة والأعلاف.",
+                icon: "fa-wheat-awn",
+                color: "text-orange-400",
+                reqs: ["Ration Formulation", "Vitamin Deficiencies", "Feed Additives", "Metabolic Diseases", "Water Quality Impact"]
+            }
+        ];
+
+        const grid = document.getElementById('modulesGrid');
+        
+        modules.forEach(mod => {
+            const card = document.createElement('div');
+            card.className = "card-hover glass-panel p-8 rounded-3xl cursor-pointer group relative overflow-hidden";
+            card.onclick = () => showDetails(mod);
+            card.innerHTML = `
+                <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <i class="fa-solid ${mod.icon} text-8xl text-white"></i>
+                </div>
+                <div class="relative z-10">
+                    <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-colors duration-300">
+                        <i class="fa-solid ${mod.icon} text-2xl ${mod.color} group-hover:text-white"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-1 text-white font-sans">${mod.title}</h4>
+                    <h5 class="text-lg font-bold mb-3 text-emerald-400 font-arabic">${mod.arTitle}</h5>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-6 font-arabic h-10">${mod.desc}</p>
+                    <div class="flex items-center text-xs font-bold text-slate-300 gap-2 group-hover:text-emerald-300 transition-colors">
+                        <span class="font-arabic">عرض التفاصيل</span> 
+                        <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // --- 3. Modal Logic ---
+        function showDetails(mod) {
+            const modal = document.getElementById('detailsModal');
+            document.getElementById('modalTitleContent').innerHTML = `
+                <h2 class="text-3xl font-bold text-white font-sans mb-1">${mod.title}</h2>
+                <p class="text-emerald-400 text-xl font-arabic">${mod.arTitle}</p>
+            `;
+            
+            document.getElementById('modalList').innerHTML = mod.reqs.map((r, i) => `
+                <li class="flex items-center gap-4 bg-slate-800/50 p-4 rounded-xl border border-slate-700 hover:border-emerald-500/50 transition-colors group">
+                    <span class="flex-shrink-0 w-8 h-8 rounded-lg bg-slate-700 text-emerald-400 flex items-center justify-center font-bold text-sm font-sans group-hover:bg-emerald-500 group-hover:text-white transition-colors">0${i+1}</span>
+                    <span class="text-slate-200 font-sans text-sm tracking-wide">${r}</span>
+                </li>
+            `).join('');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function toggleInstructions() {
+            const modal = document.getElementById('instrModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModals() {
+            document.querySelectorAll('.fixed').forEach(m => {
+                m.classList.add('hidden');
+                m.classList.remove('flex');
+            });
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close on click outside
+        window.onclick = (e) => {
+            if (e.target.classList.contains('fixed')) closeModals();
         }
     </script>
 </body>
-
 </html>

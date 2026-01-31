@@ -1,1 +1,397 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Software Engineer Gerges Michel">
+    <title>م. جرجس ميشيل | مهندس برمجيات</title>
+    
+    <!-- خطوط عربية وأيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* المتغيرات والألوان */
+        :root {
+            --bg-color: #0f172a; /* كحلي غامق جداً */
+            --text-color: #e2e8f0;
+            --primary-color: #38bdf8; /* أزرق سماوي */
+            --secondary-color: #64748b;
+            --code-font: 'Fira Code', monospace; /* خط يشبه الكود */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* تنسيق الهيدر */
+        header {
+            background-color: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #1e293b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--code-font);
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .logo span { color: #fff; }
+
+        .nav-links a {
+            color: #94a3b8;
+            margin-right: 20px;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover { color: var(--primary-color); }
+
+        /* تنسيق القسم الرئيسي والخلفية المتحركة */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* عنصر الكانفاس للخلفية المتحركة */
+        #canvas-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* خلف الكلام */
+        }
+
+        .hero-content {
+            z-index: 2;
+            padding: 20px;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid var(--primary-color);
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .job-title {
+            font-family: var(--code-font);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 5px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            margin: 5px;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: #0f172a;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: #0f172a;
+        }
+
+        /* الأقسام الأخرى */
+        .section { padding: 80px 10%; }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2rem;
+        }
+        
+        .section-title span { color: var(--primary-color); }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .service-card {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: 0.3s;
+            border-top: 3px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .service-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        /* الفوتر */
+        footer {
+            background-color: #020617;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #1e293b;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">&lt;Gerges<span>Michel</span> /&gt;</div>
+        <nav class="nav-links">
+            <a href="#home">الرئيسية</a>
+            <a href="#about">المهارات</a>
+            <a href="#services">الخدمات</a>
+            <a href="#contact">تواصل معي</a>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <!-- هذا هو عنصر الخلفية المتحركة -->
+        <canvas id="canvas-bg"></canvas>
+
+        <div class="hero-content">
+            <img src="WhatsApp Image 2026-01-31 at 7.55.56 PM.jpeg" alt="Eng. Gerges Michel" class="profile-img">
+            <h1>مهندس. جرجس ميشيل حنا</h1>
+            <div class="job-title">Software Engineer | Full Stack Developer</div>
+            <p style="margin-bottom: 30px; color: #94a3b8;">
+                متخصص في بناء الحلول البرمجية المتكاملة وتحويل الأفكار إلى واقع رقمي.
+            </p>
+            <div>
+                <a href="#contact" class="btn btn-primary">تواصل معي</a>
+                <a href="#services" class="btn btn-outline">تصفح أعمالي</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <h2 class="section-title">لماذا تختار <span>مبرمج متخصص؟</span></h2>
+        <div style="background: #1e293b; padding: 30px; border-radius: 10px; line-height: 1.8;">
+            <p>
+                بصفتي مهندس برمجيات، لا أقوم فقط بكتابة الكود، بل أقوم بحل المشكلات. 
+                أركز على كتابة كود نظيف (Clean Code)، قابل للتطوير (Scalable)، وآمن.
+                خبرتي تشمل تصميم البنية التحتية للمواقع، التعامل مع قواعد البيانات، وضمان سرعة وكفاءة التطبيقات.
+            </p>
+        </div>
+    </section>
+
+    <section class="section" id="services">
+        <h2 class="section-title">خدماتي <span>البرمجية</span></h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <i class="fas fa-laptop-code"></i>
+                <h3>تطوير المواقع</h3>
+                <p>بناء مواقع تعريفية ومتاجر إلكترونية حديثة وسريعة.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>تطبيقات الموبايل</h3>
+                <p>تصميم وبرمجة تطبيقات تعمل على Android و iOS.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-database"></i>
+                <h3>قواعد البيانات</h3>
+                <p>تصميم وإدارة قواعد البيانات لضمان سلامة وسرعة البيانات.</p>
+            </div>
+            <div class="service-card">
+                <i class="fas fa-bug"></i>
+                <h3>حل المشاكل التقنية</h3>
+                <p>صيانة وتطوير الأنظمة القائمة وإصلاح الأخطاء البرمجية.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contact" style="text-align: center;">
+        <h2 class="section-title">ابدأ مشروعك <span>الآن</span></h2>
+        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+            <a href="tel:01272642795" class="btn btn-primary">
+                <i class="fas fa-phone"></i> 01272642795
+            </a>
+            <a href="https://wa.me/201272642795" class="btn btn-outline" style="background: #25D366; color: #fff; border: none;">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>Developed with <i class="fas fa-heart" style="color: red;"></i> by Eng. Gerges Michel &copy; 2026</p>
+    </footer>
+
+    <!-- سكريبت الخلفية المتحركة -->
+    <script>
+        const canvas = document.getElementById("canvas-bg");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        // التعامل مع تغيير حجم الشاشة
+        window.addEventListener('resize', function(){
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+
+        // إنشاء الجزيئات
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            // رسم الجزيء
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = '#38bdf8'; // لون النقاط
+                ctx.fill();
+            }
+            // تحديث الحركة
+            update() {
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        // تهيئة المصفوفة
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * 2) - 1;
+                let directionY = (Math.random() * 2) - 1;
+                let color = '#38bdf8';
+
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        // حلقة التحريك (Animation Loop)
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect();
+        }
+
+        // رسم الخطوط بين النقاط القريبة
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x))
+                    + ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    
+                    if (distance < (canvas.width/7) * (canvas.height/7)) {
+                        opacityValue = 1 - (distance / 20000);
+                        ctx.strokeStyle = 'rgba(56, 189, 248,' + opacityValue + ')';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        init();
+        animate();
+    </script>
+
+</body>
+</html>
 
